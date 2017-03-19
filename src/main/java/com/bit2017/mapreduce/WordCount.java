@@ -3,6 +3,8 @@ package com.bit2017.mapreduce;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
@@ -17,6 +19,8 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 public class WordCount {
 
+	private static Log log = LogFactory.getLog( WordCount.class );
+			
 	public static class MyMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
 		private Text word = new Text();
 		private static LongWritable one = new LongWritable(1);
@@ -24,7 +28,7 @@ public class WordCount {
 		@Override
 		protected void setup(Mapper<LongWritable, Text, Text, LongWritable>.Context context)
 				throws IOException, InterruptedException {
-			System.out.println( "---------------------------> MyMapper.setup() called" );
+			log.info( "---------------------------> MyMapper.setup() called" );
 		}
 
 
