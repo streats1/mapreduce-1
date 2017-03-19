@@ -22,6 +22,13 @@ public class WordCount {
 		private static LongWritable one = new LongWritable(1);
 		
 		@Override
+		protected void setup(Mapper<LongWritable, Text, Text, LongWritable>.Context context)
+				throws IOException, InterruptedException {
+			System.out.println( "---------------------------> MyMapper.setup() called" );
+		}
+
+
+		@Override
 		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, LongWritable>.Context context)
 				throws IOException, InterruptedException {
 			
