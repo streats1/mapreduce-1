@@ -20,7 +20,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 public class WordCount {
 
 	private static Log log = LogFactory.getLog( WordCount.class );
-	
+			
 	public static class MyMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
 		private Text word = new Text();
 		private static LongWritable one = new LongWritable(1);
@@ -28,14 +28,13 @@ public class WordCount {
 		@Override
 		protected void setup(Mapper<LongWritable, Text, Text, LongWritable>.Context context)
 				throws IOException, InterruptedException {
-			log.info( "------> setup() called" );
+			log.info( "---------------------------> MyMapper.setup() called" );
 		}
+
 
 		@Override
 		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, LongWritable>.Context context)
 				throws IOException, InterruptedException {
-			
-			log.info( "-------> map() called" );
 			
 			String line = value.toString();
 			StringTokenizer tokenizer = 
@@ -45,19 +44,6 @@ public class WordCount {
 				context.write( word, one );
 			}
 		}
-
-		@Override
-		protected void cleanup(Mapper<LongWritable, Text, Text, LongWritable>.Context context)
-				throws IOException, InterruptedException {
-			log.info( "-------> cleanup() called" );
-		}
-
-		//run 은 보통 Override를 하지 않는다.
-//		@Override
-//		public void run(Mapper<LongWritable, Text, Text, LongWritable>.Context context)
-//				throws IOException, InterruptedException {
-//			super.run(context);
-//		}
 	}
 
 	public static class MyReducer extends Reducer<Text, LongWritable, Text, LongWritable> {
@@ -90,7 +76,7 @@ public class WordCount {
 		job.setReducerClass( MyReducer.class);
 		
 		//4. 출력 키 타입
-		job.setOutputKeyClass( Text.class );
+		job.setMapOutputKeyClass( Text.class );
 		//5. 출력 밸류 타입
 		job.setMapOutputValueClass( LongWritable.class );
 		
