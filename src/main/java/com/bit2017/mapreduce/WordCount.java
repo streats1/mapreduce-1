@@ -35,7 +35,7 @@ public class WordCount {
 		@Override
 		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, LongWritable>.Context context)
 				throws IOException, InterruptedException {
-			
+			log.info( "---------------------------> MyMapper.map() called" );
 			String line = value.toString();
 			StringTokenizer tokenizer = 
 					 new StringTokenizer( line, "\r\n\t,|()<> ''.:" );
@@ -44,6 +44,15 @@ public class WordCount {
 				context.write( word, one );
 			}
 		}
+
+
+		@Override
+		protected void cleanup(Mapper<LongWritable, Text, Text, LongWritable>.Context context)
+				throws IOException, InterruptedException {
+			log.info( "---------------------------> MyMapper.cleanup() called" );
+		}
+	
+		
 	}
 
 	public static class MyReducer extends Reducer<Text, LongWritable, Text, LongWritable> {
