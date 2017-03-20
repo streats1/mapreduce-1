@@ -26,13 +26,6 @@ public class WordCount {
 	public static class MyMapper extends Mapper<LongWritable, Text, Text, NumberWritable> {
 		private Text word = new Text();
 		private static NumberWritable one = new NumberWritable(1L);
-		
-		@Override
-		protected void setup(Mapper<LongWritable, Text, Text, NumberWritable>.Context context)
-				throws IOException, InterruptedException {
-			log.info( "---------------------------> MyMapper.setup() called" );
-		}
-
 
 		@Override
 		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, NumberWritable>.Context context)
@@ -46,15 +39,6 @@ public class WordCount {
 				context.write( word, one );
 			}
 		}
-
-
-		@Override
-		protected void cleanup(Mapper<LongWritable, Text, Text, NumberWritable>.Context context)
-				throws IOException, InterruptedException {
-			log.info( "---------------------------> MyMapper.cleanup() called" );
-		}
-	
-		
 	}
 
 	public static class MyReducer extends Reducer<Text, NumberWritable, Text, NumberWritable> {
