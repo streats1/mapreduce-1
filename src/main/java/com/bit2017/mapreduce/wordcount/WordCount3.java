@@ -1,4 +1,4 @@
-package com.bit2017.mapreduce;
+package com.bit2017.mapreduce.wordcount;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
@@ -18,7 +18,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import com.bit2017.mapreduce.io.NumberWritable;
 import com.bit2017.mapreduce.io.StringWritable;
 
-public class WordCount2 {
+public class WordCount3 {
 	
 	public static class MyMapper extends Mapper<Text, Text, StringWritable, NumberWritable> {
 		private StringWritable word = new StringWritable();
@@ -59,10 +59,10 @@ public class WordCount2 {
 	
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-		Job job = new Job( conf, "WordCount" );
+		Job job = new Job( conf, "WordCount2" );
 		
 		//Job Instance 초기화 작업
-		job.setJarByClass( WordCount.class );
+		job.setJarByClass( WordCount3.class );
 		
 		//맵퍼 클래스 지정
 		job.setMapperClass( MyMapper.class );

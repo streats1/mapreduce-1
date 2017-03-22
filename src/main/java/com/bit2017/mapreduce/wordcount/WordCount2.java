@@ -1,10 +1,8 @@
-package com.bit2017.mapreduce;
+package com.bit2017.mapreduce.wordcount;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
@@ -20,10 +18,9 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import com.bit2017.mapreduce.io.NumberWritable;
 import com.bit2017.mapreduce.io.StringWritable;
 
-public class WordCount {
 
-	private static Log log = LogFactory.getLog( WordCount.class );
-			
+public class WordCount2 {
+	
 	public static class MyMapper extends Mapper<LongWritable, Text, StringWritable, NumberWritable> {
 		private StringWritable word = new StringWritable();
 		private static NumberWritable one = new NumberWritable(1L);
@@ -31,7 +28,6 @@ public class WordCount {
 		@Override
 		protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, StringWritable, NumberWritable>.Context context)
 				throws IOException, InterruptedException {
-			log.info( "---------------------------> MyMapper.map() called" );
 			String line = value.toString();
 			StringTokenizer tokenizer = 
 					 new StringTokenizer( line, "\r\n\t,|()<> ''.:" );
@@ -54,20 +50,22 @@ public class WordCount {
 				sum += value.get();
 			}
 			
+			sum = 0;
+			for( NumberWritable value : values ) {
+				sum += value.get();
+			}			
+			
 			sumWritable.set( sum );
-
-			context.getCounter( "Word Status", "Count of all Words" ).increment( sum );
-
 			context.write( key, sumWritable );
 		}
 	}
 	
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-		Job job = new Job( conf, "WordCount" );
+		Job job = new Job( conf, "WordCount2" );
 		
 		//1. Job Instance 초기화 작업
-		job.setJarByClass( WordCount.class );
+		job.setJarByClass( WordCount2.class );
 		
 		//2. 맵퍼 클래스 지정
 		job.setMapperClass( MyMapper.class );
