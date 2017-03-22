@@ -50,11 +50,6 @@ public class WordCount2 {
 				sum += value.get();
 			}
 			
-			sum = 0;
-			for( NumberWritable value : values ) {
-				sum += value.get();
-			}			
-			
 			sumWritable.set( sum );
 			context.write( key, sumWritable );
 		}

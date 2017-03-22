@@ -42,14 +42,10 @@ public class WordCount {
 		protected void reduce(Text key, Iterable<LongWritable> values,
 				Reducer<Text, LongWritable, Text, LongWritable>.Context context) throws IOException, InterruptedException {
 			long sum = 0;
+			
 			for( LongWritable value : values ) {
 				sum += value.get();
 			}
-			
-			sum = 0;
-			for( LongWritable value : values ) {
-				sum += value.get();
-			}			
 			
 			sumWritable.set( sum );
 			context.write( key, sumWritable );
