@@ -68,8 +68,11 @@ public class WordCount3 {
 		//리듀서 클래스 지정
 		job.setReducerClass( MyReducer.class);
 		
+		//리듀스 개 수 지정
+		job.setNumReduceTasks( 2 );
+		
 		// 컴바이너 세팅
-		//job.setCombinerClass( MyReducer.class );
+		job.setCombinerClass( MyReducer.class );
 		
 		//출력 키 타입
 		job.setMapOutputKeyClass( Text.class );
